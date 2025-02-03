@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+  max-width: 1440px;
+  margin: 28px auto;
+}
+
+@font-face {
+  font-family: "Helvetica Neue";
+  src: url("/public/fonts/HelveticaNeueMedium.otf") format("otf");
+}
+
+body {
+  background-color: #f3f3f3;
+  font-family: "Helvetica Neue", sans-serif;
+}
+
+[data-theme="red"] {
+  --color: #f03f3b;
+}
+
+[data-theme="blue"] {
+  --color: #0957c3;
+}
+
+[data-theme="brown"] {
+  --color: #103931;
+}
