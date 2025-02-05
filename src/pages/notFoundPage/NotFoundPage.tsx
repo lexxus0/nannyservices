@@ -9,7 +9,7 @@ const NotFoundPage: React.FC = () => {
         </p>
         <a
           href="/"
-          className="mt-6 inline-block px-6 py-3 bg-[var(--color)] text-white rounded-lg shadow-md"
+          className="mt-6 inline-block px-6 py-3 bg-[var(--color)] text-white rounded-lg shadow-md  hover:text-[var(--color)] hover:bg-white hover:border hover:border-[var(--color)] transition-colors ease-in duration-300"
         >
           Go Home
         </a>

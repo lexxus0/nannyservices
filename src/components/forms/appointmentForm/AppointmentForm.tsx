@@ -1,4 +1,3 @@
-import React from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { emailRegex } from "../registerForm/RegisterForm";
 import { Controller, useForm } from "react-hook-form";
@@ -6,6 +5,7 @@ import * as Yup from "yup";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Nanny } from "../../../types/types";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
 type AppointmentFormProps = {
   nanny: Nanny;
@@ -59,6 +59,18 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ nanny }) => {
     comment?: string;
   }) => {
     console.log(data);
+    toast.success(`Your data has been successfully sent to ${nanny.name}!`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+    <ToastContainer />;
   };
 
   return (
@@ -149,23 +161,19 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ nanny }) => {
               control={control}
               render={({ field }) => (
                 <ReactDatePicker
-                  {...field}
-                  value={field.value ? new Date(field.value).toISOString() : ""}
-                  onChange={(date: Date[] | null) =>
-                    field.onChange(date ? date[0] : null)
-                  }
+                  selected={field.value ? new Date(field.value) : null}
+                  onChange={(date: Date | null) => field.onChange(date)}
                   showTimeSelect
-                  selectsMultiple={true}
                   showTimeSelectOnly
                   timeIntervals={10}
                   timeFormat="HH:mm"
                   dateFormat="HH:mm"
                   placeholderText="00:00"
-                  className="border w-[232px] h-[52px] pl-[18px] py-4 rounded-xl border-solid border-[rgba(17,16,28,0.1)]  placeholder:text-black"
+                  className="border w-[232px] h-[52px] pl-[18px] py-4 rounded-xl border-solid border-[rgba(17,16,28,0.1)] placeholder:text-black"
+                  ref={field.ref}
                 />
               )}
             />
-
             {errors.time && (
               <p className="text-sm text-orange-700 mt-[5px] mb-3">
                 {errors.time.message}
@@ -213,7 +221,6 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ nanny }) => {
           render={({ field }) => (
             <textarea
               {...field}
-              // type="text"
               placeholder="Comment"
               className="border w-full h-[100px] pl-[18px] py-4 rounded-xl border-solid border-[rgba(17,16,28,0.1)] mb-5 placeholder:text-black resize-none"
             />

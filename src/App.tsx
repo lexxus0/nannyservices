@@ -4,7 +4,6 @@ import Layout from "./Layout";
 import PrivateRoute from "./routes/PrivateRoute";
 import { useAppDispatch, useAppSelector } from "./store/tools/hooks";
 import { lazy, useEffect } from "react";
-import { fetchNannies } from "./store/state/nannies/operations";
 import { selectTheme } from "./store/state/theme/selectors";
 import { setTheme } from "./store/state/theme/slice";
 
@@ -20,7 +19,6 @@ const App: React.FC = () => {
   const theme = useAppSelector(selectTheme);
 
   useEffect(() => {
-    dispatch(fetchNannies());
     dispatch(setTheme(theme));
   }, [dispatch, theme]);
 

@@ -1,5 +1,5 @@
 export type Nanny = {
-  id: number;
+  id: string;
   name: string;
   avatar_url: string;
   birthday: string;
@@ -37,4 +37,8 @@ export type NannyState = {
   nannies: Nanny[];
   isLoading: boolean;
   error: string | null;
+  hasMore: boolean;
+  initialLoad: boolean;
+  limit: number | null;
+  lastKey: string | null;
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Nanny } from "../../types/types";
 import { IoIosStar } from "react-icons/io";
 import { SlLocationPin } from "react-icons/sl";
@@ -9,6 +9,7 @@ import { toggleFavorite } from "../../store/state/favourites/slice";
 import { selectIsLoggedIn } from "../../store/state/auth/selectors";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import AppointmentModal from "../modals/AppointmentModal";
+import { InfoWrapper } from "./tools";
 
 const calculateAge = (birthday: string) => {
   const birthDate = new Date(birthday);
@@ -26,35 +27,6 @@ const calculateAge = (birthday: string) => {
 
 const convertRating = (rating: number): string => {
   return rating % 1 === 0 ? `${rating}.0` : rating.toString();
-};
-
-const CommaSeparatedList: React.FC<{ values: string[] }> = ({ values }) => (
-  <div className="flex flex-wrap gap-2">
-    {values.map((item, index) => (
-      <span key={index} className="text-base">
-        {item.charAt(0).toUpperCase() + item.slice(1)}
-        {index < values.length - 1 && ", "}
-      </span>
-    ))}
-  </div>
-);
-
-const InfoWrapper: React.FC<{ label: string; value: string | string[] }> = ({
-  label,
-  value,
-}) => {
-  return (
-    <div className="flex flex-row gap-[2px] px-[18px] py-3 rounded-[100px] bg-[#f2f4f7] mix-blend-multiply items-center">
-      <span className="font-medium text-base text-[#8a8a89]">
-        {label}:&nbsp;
-      </span>
-      {Array.isArray(value) ? (
-        <CommaSeparatedList values={value} />
-      ) : (
-        <span>{value}</span>
-      )}
-    </div>
-  );
 };
 
 interface NannyItemProps {
@@ -80,7 +52,7 @@ const NannyItem: React.FC<NannyItemProps> = ({ nanny }) => {
 
   return (
     <li
-      key={nanny.name}
+      key={nanny.id}
       className="bg-[#fbfbfb] rounded-3xl p-6 w-[1184px] my-0 mx-auto relative"
     >
       <div className="flex relative">
