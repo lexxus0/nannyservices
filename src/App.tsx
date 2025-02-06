@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "./store/tools/hooks";
 import { lazy, useEffect } from "react";
 import { selectTheme } from "./store/state/theme/selectors";
 import { setTheme } from "./store/state/theme/slice";
+import { ToastContainer } from "react-toastify";
 
 const WelcomePage = lazy(() => import("./pages/welcomePage/WelcomePage"));
 const NanniesPage = lazy(() => import("./pages/nanniesPage/NanniesPage"));
@@ -33,6 +34,7 @@ const App: React.FC = () => {
         />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <ToastContainer />
     </Layout>
   );
 };

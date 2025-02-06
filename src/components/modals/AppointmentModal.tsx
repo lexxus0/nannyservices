@@ -11,7 +11,7 @@ type ModalProps = {
 const AppointmentModal: React.FC<ModalProps> = ({ isOpen, onClose, nanny }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <AppointmentForm nanny={nanny} />
+      <AppointmentForm nanny={nanny} onClose={onClose} />
     </Modal>
   );
 };

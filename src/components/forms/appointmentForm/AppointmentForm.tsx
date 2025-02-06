@@ -1,55 +1,39 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { emailRegex } from "../registerForm/RegisterForm";
 import { Controller, useForm } from "react-hook-form";
-import * as Yup from "yup";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Nanny } from "../../../types/types";
-import { Bounce, ToastContainer, toast } from "react-toastify";
+import { Bounce, toast } from "react-toastify";
+import { appointmentValidationSchema } from "../../../schemas/schemas";
 
 type AppointmentFormProps = {
   nanny: Nanny;
+  onClose: () => void;
 };
 
-const AppointmentForm: React.FC<AppointmentFormProps> = ({ nanny }) => {
-  const appointmentValidationSchema = Yup.object().shape({
-    address: Yup.string()
-      .required("Please, provide an address")
-      .min(2, "Address must be 2 characters or more")
-      .max(35, "Address has to be less than 35 characters"),
-    tel: Yup.string()
-      .required("Please, provide a phone number")
-      .matches(
-        /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/,
-        "Please, provide a valid phone number"
-      ),
-    childAge: Yup.number()
-      .required("Please, provide a child age")
-      .min(0, "Child age must be 0 or more")
-      .max(18, "Child age must be less than 18"),
-    time: Yup.date().required("Please, provide a time"),
-    email: Yup.string()
-      .required("Please, provide an email")
-      .matches(emailRegex, "Please, provide a valid email"),
-    parentName: Yup.string()
-      .required("Please, provide a parent name")
-      .min(2, "Parent name must be 2 characters or more")
-      .max(35, "Parent name has to be less than 35 characters"),
-    comment: Yup.string().max(
-      500,
-      "Comment has to be less than 500 characters"
-    ),
-  });
-
+const AppointmentForm: React.FC<AppointmentFormProps> = ({
+  nanny,
+  onClose,
+}) => {
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(appointmentValidationSchema),
+    defaultValues: {
+      address: "",
+      tel: "",
+      childAge: undefined,
+      time: undefined,
+      email: "",
+      parentName: "",
+      comment: "",
+    },
   });
 
-  const onSubmit = async (data: {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const onSubmit = async (_data: {
     address: string;
     tel: string;
     childAge: number;
@@ -58,19 +42,18 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ nanny }) => {
     parentName: string;
     comment?: string;
   }) => {
-    console.log(data);
+    setTimeout(onClose, 1500);
     toast.success(`Your data has been successfully sent to ${nanny.name}!`, {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: false,
-      closeOnClick: false,
+      closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "light",
       transition: Bounce,
     });
-    <ToastContainer />;
   };
 
   return (
@@ -143,7 +126,9 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ nanny }) => {
               render={({ field }) => (
                 <input
                   {...field}
-                  type="text"
+                  type="string"
+                  value={field.value ?? ""}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
                   placeholder="Child age"
                   className="border w-[232px] h-[52px] pl-[18px] py-4 rounded-xl border-solid border-[rgba(17,16,28,0.1)] mb-5 placeholder:text-black"
                 />

@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../store/tools/hooks";
 import { selectFavorites } from "../../store/state/favourites/selectors";
 import { toggleFavorite } from "../../store/state/favourites/slice";
 import { selectIsLoggedIn } from "../../store/state/auth/selectors";
-import { Bounce, ToastContainer, toast } from "react-toastify";
+import { Bounce, toast } from "react-toastify";
 import AppointmentModal from "../modals/AppointmentModal";
 import { InfoWrapper } from "./tools";
 
@@ -89,7 +89,6 @@ const NannyItem: React.FC<NannyItemProps> = ({ nanny }) => {
           }}
           style={{ color: isFavorite ? "var(--color)" : "black" }}
         />
-        <ToastContainer />
 
         <div className="ml-[144px] mb-6">
           <p className="font-medium text-base text-[#8a8a89]">Nanny</p>

@@ -1,18 +1,10 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAppDispatch } from "../../../store/tools/hooks";
 import { loginUser } from "../../../store/state/auth/operations";
-import { emailRegex } from "../registerForm/RegisterForm";
-
-const loginValidationSchema = Yup.object().shape({
-  email: Yup.string()
-    .required("Please, provide an email")
-    .matches(emailRegex, "Please, provide a valid email"),
-  password: Yup.string().required("Please, provide a password"),
-});
+import { loginValidationSchema } from "../../../schemas/schemas";
 
 const LoginForm = () => {
   const dispatch = useAppDispatch();
@@ -24,6 +16,10 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(loginValidationSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const onSubmit = async (data: { email: string; password: string }) => {
